@@ -7,8 +7,6 @@ string of one or more blanks by a single blank.
 void main()
 {
     int c, previous_c;
-
-    c = 0
     previous_c = EOF;
     while ((c = getchar()) != EOF)
     {
