@@ -7,70 +7,70 @@ long lines, and if there are no blanks or tabs before the specified column.
 #include <stdio.h>
 
 #define BUFFER_SIZE 1024
-#define COLUMN_WIDTH 80
 
-int getline_(char buffer[], int limit);
-int fold(char line[], int length);
+int getline_(char buffer[], int length);
+void fold(int width, char s[], char t[]);
 
 int main()
 {
-    int length;
-    char buffer[BUFFER_SIZE];
-    while((length = getline_(buffer, BUFFER_SIZE)) > 0)
-    {
-        if(length > COLUMN_WIDTH)
-        {
-            fold(buffer, length);
-        }
-        printf("%s", buffer);
-    }
+    char line_buffer[BUFFER_SIZE];
+    char dest_buffer[BUFFER_SIZE];
 
+    for(int i = 0; i < BUFFER_SIZE; ++i)
+        dest_buffer[i] = '@';
+
+    while(getline_(line_buffer, BUFFER_SIZE) > 0)
+    {
+        fold(80, line_buffer, dest_buffer);
+        printf("%s", dest_buffer);
+    }
     return 0;
 }
 
-int getline_(char buffer[], int limit)
+int getline_(char buffer[], int length)
 {
-    int c, i;
-    for(i = 0; i < limit-1 && (c = getchar()) != EOF && c != '\n'; ++i)
+    int i, c;
+    for(i = 0; i < length - 1 && (c = getchar()) != EOF && c != '\n'; ++i)
+    {
         buffer[i] = c;
+    }
 
     if(c == '\n')
     {
         buffer[i] = c;
-        ++i;
+        i++;
     }
+
     buffer[i] = '\0';
 
     return i;
 }
 
-int fold(char line[], int length)
+void fold(int width, char s[], char t[])
 {
-    int i, j, last_blank;
-    for(i = 0; i < length; ++i)
+    int i, j, k, l, m;
+    i = j = k = l = m = 0;
+    while(s[i] != '\0')
     {
-        if(line[i] == ' ' || line[i] == '\t')
+        if(s[i] == ' ' && k % width != width - 1)
         {
-            last_blank = i;
+            l = i;
+            m = j;
         }
 
-        if((i % COLUMN_WIDTH) == COLUMN_WIDTH-1)
+        t[j] = s[i];
+
+        if(k % width == width - 1)
         {
-            if(last_blank == -1)
-            {
-                for(j = length; j >= i; --j)
-                {
-                    line[j+1] = line[j];
-                }
-                line[i] = '\n';
-                ++length;
-                line[length] = '\0';
-            }
-            else
-            {
-                line[last_blank] = '\n';
-                last_blank = -1;
-            }
+            i = l;
+            j = m;
+            ++j;
+            t[j] = '\n';
         }
+
+        i++;
+        j++;
+        k++;
     }
+    t[j] = '\0';
 }

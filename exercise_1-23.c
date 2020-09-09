@@ -15,7 +15,9 @@ int main()
             d = getchar();
             if(d == '/')
             {
-                while((e = getchar()) != '\n');
+                while((e = getchar()) != '\n')
+                    ;
+                putchar(e);
             }
             else if(d == '*')
             {
@@ -23,7 +25,11 @@ int main()
                 {
                     f = e;
                 }
-                getchar();
+            }
+            else
+            {
+                putchar(c);
+                putchar(d);
             }
         }
         else
@@ -31,6 +37,4 @@ int main()
             putchar(c);
         }
     }
-
-    return 0;
 }

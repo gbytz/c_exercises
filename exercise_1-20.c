@@ -5,32 +5,60 @@ stops, say every n columns. Should n be a variable or a symbolic parameter?
 */
 #include <stdio.h>
 
-#define TAB_STOP 4
+#define BUFFER_SIZE 1024
+
+int getline_(char buffer[], int length);
+void detab(int tab_stop, char s[], char t[]);
 
 int main()
 {
-    int c, col, spaces;
-    col = 0;
-    while((c = getchar()) != EOF)
+    char line_buffer[BUFFER_SIZE];
+    char dest_buffer[BUFFER_SIZE];
+    while(getline_(line_buffer, BUFFER_SIZE) > 0)
     {
-        if(c == '\t')
+        detab(4, line_buffer, dest_buffer);
+        printf("%s", dest_buffer);
+    }
+    return 0;
+}
+
+int getline_(char buffer[], int length)
+{
+    int c, i;
+    for(i = 0; i < length-1 && (c = getchar()) != EOF && c != '\n'; ++i)
+        buffer[i] = c;
+
+    if(c == '\n')
+    {
+        buffer[i] = c;
+        ++i;
+    }
+    buffer[i] = '\0';
+
+    return i;
+}
+
+void detab(int tab_stop, char s[], char t[])
+{
+    int i, j;
+    i = j = 0;
+    while(s[i] != '\0')
+    {
+        if(s[i] != '\t')
         {
-            for(int spaces = TAB_STOP - (col % TAB_STOP); spaces > 0; --spaces)
-            {
-                putchar(' ');
-                ++col;
-            }
-        }
-        else if(c == '\n')
-        {
-            putchar(c);
-            col = 0;
+            t[j] = s[i];
+            j++;
         }
         else
         {
-            putchar(c);
-            ++col;
+            do
+            {
+                t[j] = ' ';
+                j++;
+            }
+            while((j % tab_stop) != 0);
         }
+        i++;
     }
-    return 0;
+    t[j] = '\0';
 }

@@ -6,34 +6,75 @@ tab stop, which should be given preference?
 */
 #include <stdio.h>
 
-#define TAB_STOP 4
+#define BUFFER_SIZE 1024
+
+int getline_(char buffer[], int length);
+void entab(int tab_stop, char s[], char t[]);
 
 int main()
 {
-    int c, spaces, tabs;
-    spaces = tabs = 0;
-    while((c = getchar()) != EOF)
+    char line_buffer[BUFFER_SIZE];
+    char dest_buffer[BUFFER_SIZE];
+    while(getline_(line_buffer, BUFFER_SIZE))
     {
-        if(c == ' ')
+        entab(4, line_buffer, dest_buffer);
+        printf("%s", dest_buffer);
+    }
+    return 0;
+}
+
+int getline_(char buffer[], int length)
+{
+    int c, i;
+    for(i = 0; i < length - 1 && (c = getchar()) != EOF && c != '\n'; ++i)
+    {
+        buffer[i] = c;
+    }
+
+    if(c == '\n')
+    {
+        buffer[i] = c;
+        ++i;
+    }
+
+    buffer[i] = '\0';
+
+    return i;
+}
+
+void entab(int tab_stop, char s[], char t[])
+{
+    int i, j;
+    for(i = 0, j = 0; s[i] == ' ' || s[i] == '\t'; ++i)
+    {
+        if(s[i] == ' ')
         {
-            ++spaces;
-            if(spaces % TAB_STOP == 0)
-            {
-                ++tabs;
-                spaces = 0;
-            }
+            j += 1;
         }
         else
         {
-
-            for( ; tabs > 0; --tabs)
-                putchar('\t');
-
-            for( ; spaces > 0; --spaces)
-                putchar(' ');
-
-            putchar(c);
+            j += tab_stop - (j % tab_stop);
         }
     }
-    return 0;
+
+    int k = 0;
+    int tabs = j / tab_stop;
+    while(tabs > 0)
+    {
+        t[k++] = '\t';
+        --tabs;
+    }
+
+    int spaces = j % tab_stop;
+    while(spaces > 0)
+    {
+        t[k++] = ' ';
+        --spaces;
+    }
+
+    while(s[i] != '\0')
+    {
+        t[k++] = s[i++];
+    }
+    t[k] = '\0';
 }

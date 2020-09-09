@@ -6,12 +6,15 @@ string of one or more blanks by a single blank.
 
 void main()
 {
-    int c, previous_c;
-    previous_c = EOF;
-    while ((c = getchar()) != EOF)
+    int c;
+    while((c = getchar()) != EOF)
     {
-        if(c != ' ' || c != previous_c)
-            putchar(c);
-        previous_c = c;
+        putchar(c);
+        if(c == ' ')
+        {
+            while((c = getchar()) == ' ')
+                ;
+           putchar(c);
+        }
     }
 }
