@@ -43,7 +43,7 @@ int htoi(char s[])
 
     for(n = 0; isxdigit(s[i]); ++i)
     {
-    	lower = tolower(s[i]);
+        lower = tolower(s[i]);
         if(isdigit(s[i]))
             term = lower - '0';
         else
