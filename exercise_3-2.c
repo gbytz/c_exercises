@@ -1,6 +1,6 @@
 /*
-Exercise 3-2. Write a function escape(s, t) that converts characters like
-newline and tab into visible escape sequences like \n and \t as it copies the
+Exercise 3-2. Write a function escape (s, t) that converts characters like
+newline and tab into visible escape sequences like \n and \ t as it copies the
 string t to s. Use a switch. Write a function for the other direction as well,
 converting escape sequences into the real characters.
 */
@@ -8,38 +8,46 @@ converting escape sequences into the real characters.
 
 #define BUFFER_SIZE 1024
 
+int getline_(char buffer[], int length);
 void escape(char s[], char t[]);
 void unescape(char s[], char t[]);
 
 int main()
 {
-    char s[BUFFER_SIZE], u[BUFFER_SIZE];
-    for(int i = 0; i < BUFFER_SIZE; ++i)
+    char line_buffer[BUFFER_SIZE];
+    char dest_buffer[BUFFER_SIZE];
+    while(getline_(line_buffer, BUFFER_SIZE))
     {
-        s[i] = '\0';
-        u[i] = '\0';
+        escape(dest_buffer, line_buffer);
+        unscape(line_buffer, dest_buffer);
+        printf("%s", line_buffer);
+    }
+    return 0;
+}
+
+int getline_(char buffer[], int length)
+{
+    int i, c;
+    for(i = 0; i < length - 1 && (c = getchar()) != EOF && c != '\n'; ++i)
+    {
+        buffer[i] = c;
     }
 
-    char t[] =
-    "		 \n"
-    "	    \n"
-    "	 		\n"
-    "	\n"
-    "		  \n"
-    ;
+    if(c == '\n')
+    {
+        buffer[i] = c;
+        ++i;
+    }
 
-    printf("t:\n %s\n", t);
-    escape(s, t);
-    printf("escape(s, t):\n %s\n", s);
-    unescape(u, s);
-    printf("unescape(u, s):\n %s\n", u);
-    return 0;
+    buffer[i] = '\0';
+
+    return i;
 }
 
 void escape(char s[], char t[])
 {
     int i, j;
-    for(i = j = 0; t[i] != '\0' && j < BUFFER_SIZE; ++i)
+    for(i = j = 0; t[i] != '\0'; ++i)
     {
         switch(t[i])
         {
@@ -56,12 +64,13 @@ void escape(char s[], char t[])
                 break;
         }
     }
+    s[j] = '\0';
 }
 
 void unescape(char s[], char t[])
 {
     int i, j;
-    for(i = j = 0; t[i] != '\0' && j < BUFFER_SIZE; ++i)
+    for(i = j = 0; t[i] != '\0'; ++i)
     {
         if(t[i] == '\\')
         {
@@ -84,4 +93,5 @@ void unescape(char s[], char t[])
             s[j++] = t[i];
         }
     }
+    s[j] = '\0';
 }
