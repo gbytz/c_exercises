@@ -19,7 +19,7 @@ int main()
     while(getline_(line_buffer, BUFFER_SIZE))
     {
         escape(dest_buffer, line_buffer);
-        unscape(line_buffer, dest_buffer);
+        unescape(line_buffer, dest_buffer);
         printf("%s", line_buffer);
     }
     return 0;
