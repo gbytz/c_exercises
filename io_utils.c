@@ -1,6 +1,17 @@
 #include <ctype.h>
 #include <stdio.h>
 
+void print_parameters(int argc, const char *argv[])
+{
+    printf("***** PARAMETERS *****\n");
+    printf("argc:\t%d\n", argc);
+    for(int i = 0; i <= argc; ++i)
+    {
+        printf("argv[%d]: %s\n", i, argv[i]);
+    }
+    printf("**********************\n");
+}
+
 int get_word(char b[], int b_size)
 {
     int c, i;
