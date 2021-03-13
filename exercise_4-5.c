@@ -160,15 +160,15 @@ int getop(char s[])
         {
             return s[0];
         }
-        else if(are_equal(s, "sin"))
+        else if(str_equ(s, "sin"))
         {
             return SIN;
         }
-        else if(are_equal(s, "exp"))
+        else if(str_equ(s, "exp"))
         {
             return EXP;
         }
-        else if(are_equal(s, "pow"))
+        else if(str_equ(s, "pow"))
         {
             return POW;
         }

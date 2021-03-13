@@ -176,31 +176,31 @@ int getop(char s[])
             ungetch(c);
         }
 
-        if(are_equal(to_lower(s), "print"))
+        if(str_equ(str_tolower_inplace(s), "print"))
         {
             return PRINT;
         }
-        else if(are_equal(to_lower(s), "duplicate"))
+        else if(str_equ(str_tolower_inplace(s), "duplicate"))
         {
             return DUPLICATE;
         }
-        else if(are_equal(to_lower(s), "swap"))
+        else if(str_equ(str_tolower_inplace(s), "swap"))
         {
             return SWAP;
         }
-        else if(are_equal(to_lower(s), "clear"))
+        else if(str_equ(str_tolower_inplace(s), "clear"))
         {
             return CLEAR;
         }
-        else if(are_equal(to_lower(s), "sin"))
+        else if(str_equ(str_tolower_inplace(s), "sin"))
         {
             return SIN;
         }
-        else if(are_equal(to_lower(s), "exp"))
+        else if(str_equ(str_tolower_inplace(s), "exp"))
         {
             return EXP;
         }
-        else if(are_equal(to_lower(s), "pow"))
+        else if(str_equ(str_tolower_inplace(s), "pow"))
         {
             return POW;
         }
