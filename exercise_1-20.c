@@ -49,7 +49,7 @@ void detab(int tab_stop, char s[], char t[])
             t[j] = s[i];
             j++;
         }
-        else
+        else if(tab_stop > 0)
         {
             do
             {
