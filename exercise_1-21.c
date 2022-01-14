@@ -44,37 +44,42 @@ int getline_(char buffer[], int length)
 
 void entab(int tab_stop, char s[], char t[])
 {
-    int i, j;
-    for(i = 0, j = 0; s[i] == ' ' || s[i] == '\t'; ++i)
+    int i, j, k;
+    i = j = k = 0;
+    while (s[i] != '\0')
     {
-        if(s[i] == ' ')
+        j = 0;
+        while(s[i] == ' ' || s[i] == '\t')
         {
-            j += 1;
+            if(s[i] == ' ')
+            {
+                j += 1;
+            }
+            else
+            {
+                j += tab_stop - (j % tab_stop);
+            }
+            ++i;
         }
-        else
+
+        int tabs = j / tab_stop;
+        while(tabs > 0)
         {
-            j += tab_stop - (j % tab_stop);
+            t[k++] = '\t';
+            --tabs;
         }
-    }
 
-    int k = 0;
-    int tabs = j / tab_stop;
-    while(tabs > 0)
-    {
-        t[k++] = '\t';
-        --tabs;
-    }
+        int spaces = j % tab_stop;
+        while(spaces > 0)
+        {
+            t[k++] = ' ';
+            --spaces;
+        }
 
-    int spaces = j % tab_stop;
-    while(spaces > 0)
-    {
-        t[k++] = ' ';
-        --spaces;
-    }
-
-    while(s[i] != '\0')
-    {
-        t[k++] = s[i++];
+        while(s[i] != ' ' && s[i] != '\t' && s[i] != '\0')
+        {
+            t[k++] = s[i++];
+        }
     }
     t[k] = '\0';
 }
