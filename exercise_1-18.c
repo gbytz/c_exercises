@@ -39,7 +39,7 @@ int getline_(char buffer[], int length)
     return i;
 }
 
-/* remove_trailing_blanks: removes the trailing blanks from a C string */
+/* remove_trailing_blanks: removes trailing blanks from a C string */
 int remove_trailing_blanks(char line[])
 {
     int i, w;

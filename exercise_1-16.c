@@ -32,7 +32,7 @@ int main()
     return 0;
 }
 
-/* getline_: read a line into s, return length */
+/* getline_: read a line into s, returns length */
 int getline_(char s[], int lim)
 {
     int c, i, j;

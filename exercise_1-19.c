@@ -37,7 +37,7 @@ int getline_(char buffer[], int length)
     return i;
 }
 
-/* reverse: reverses the stringn s in place */
+/* reverse: reverses the string s in place */
 void reverse(char s[])
 {
     int l, i;
